@@ -19,10 +19,15 @@
 # Vector operations! ####
 
 # Vectors are 1-dimensional series of values in some order
-1:10 # ':' only works for integers
+1:10# ':' only works for integers
 letters # built-in pre-made vector of a - z
-
-
+x <- 3
+y <- x**2
+class(1:10)
+class(1)
+class(1L)
+class(333L)
+class(333.3L)
 
 vector1 <- c(1,2,3,4,5,6,7,8,9,10)
 vector2 <- c(5,6,7,8,4,3,2,1,3,10)
@@ -59,11 +64,19 @@ head(dat)
 # You can access specific columns of a "data frame" by name using '$'
 dat$Species
 dat$Sepal.Length
+class(dat)
+class(dat$Sepal.Length)
 
 # You can also use square brackets to get specific 1-D or 2-D subsets of a data frame (rows and/or columns)
 dat[1,1] # [Rows, Columns]
 dat[1:3,5]
+letters[5]
+letters[c(5,6)]
 
+letters[1:10]
+
+let <- c(1,3,5,7,9)
+letters[let]
 # Plotting ####
 
 # Can make a quick plot....just give vectors for x and y axes
@@ -87,6 +100,7 @@ str(dat)
 # Let's try
 nums <- c(1,1,2,2,2,2,3,3,3,4,4,4,4,4,4,4,5,6,7,8,9)
 class(nums) # make sure it's numeric
+length(nums)
 
 # convert to a factor
 as.factor(nums) # show in console
@@ -103,13 +117,9 @@ plot(nums_factor)
 plot(nums, main = "My Title", xlab = "My axis label", ylab = "My other axis label")
 
 
-?jpeg()
-
-
+jpeg("./exampleplot.jpeg")
+plot(nums, main = "My Title", xlab = "My axis label", ylab = "My other axis label")
 dev.off()
-
-
-
 
 # Making a data frame ####
 
@@ -133,13 +143,23 @@ df1 # look at it...note column names are what we gave it.
 # Make a data frame from the first 20 rows of iris that has only Species and Sepal.Length columns
 # save it into an object called "dat3"
 
+species = c(iris$Species[1:20])
+sepal_length = c(iris$Sepal.Length[1:20])
 
+dat3 <- data.frame(Species = species, sepals = sepal_length)
+
+spp <- c("Species","Sepal.Length")
+rows <- c(1:20)
+iris[rows,spp]
+
+
+dat3 <- iris[c(1:20),c("Species","Sepal.Length")]
 
 
 
 # WRITING OUT FILES FROM R ####
 ?write.csv()
-
+write.csv(dat3, "./MILLAR_first_file.csv")
 
 # Write your new object "dat3" to a file named "LASTNAME_first_file.csv" in your PERSONAL git repository
 
