@@ -203,7 +203,7 @@ exportme <- iris[c(1:50,101:150),]
 
 
 # 4.  Write code to save this new subset as a .csv file called setosa_and_virginica.csv
-write.csv(exportme, "./Question_4.csv")
+write.csv(exportme, "./setosa_and_virginica.csv")
 
 # 5.  Upload this R script (with all answers filled in and tasks completed) to canvas and GitHub
       # I should be able to run your R script and get all the plots created and saved, etc.
