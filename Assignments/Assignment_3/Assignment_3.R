@@ -188,16 +188,22 @@ for(i in levels(dat$Species)){
 # YOUR REMAINING HOMEWORK ASSIGNMENT (Fill in with code) ####
 
 # 1.  Make a scatterplot of Sepal.Length vs Sepal.Width. See if you can get the points to be colored by "Species"
+plot(x=dat$Sepal.Length, y=dat$Sepal.Width, main = "Iris Sepal Size", xlab = "Sepal Length", ylab = "Sepal Width", col = dat$Species)
 
 
 # 2.  Write the code to save it (with meaningful labels) as a jpeg file
+jpeg("./Question_2_plot.jpeg")
+plot(x=dat$Sepal.Length, y=dat$Sepal.Width, main = "Iris Sepal Size", xlab = "Sepal Length", ylab = "Sepal Width", col = dat$Species)
+dev.off()
 
+# 3.  Subset the Iris data set to only include rows from the setosa and virginica Specieshead
 
-# 3.  Subset the Iris data set to only include rows from the setosa and virginica Species
+exportme <- iris[c(1:50,101:150),]
+
 
 
 # 4.  Write code to save this new subset as a .csv file called setosa_and_virginica.csv
-
+write.csv(exportme, "./Question_4.csv")
 
 # 5.  Upload this R script (with all answers filled in and tasks completed) to canvas and GitHub
       # I should be able to run your R script and get all the plots created and saved, etc.
