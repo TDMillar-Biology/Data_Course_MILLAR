@@ -54,6 +54,7 @@ data("iris") # load it like this
 # Each row or column is a vector
 
 
+
 dat <- iris # can rename the object to be easier to type if you want
 
 # ways to get a peek at our data set
