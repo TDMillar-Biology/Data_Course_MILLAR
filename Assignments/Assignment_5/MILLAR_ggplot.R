@@ -20,7 +20,7 @@ ggplot(iris, aes(x = Petal.Width))+
   theme_minimal()
 dev.off()
 
-## generate plot number three using geom_bar() fix the ratio
+## generate plot number three using geom_bar()
 sepal_petal_width <-  iris$Petal.Width / iris$Sepal.Width
 png(filename = "./iris_fig3.png")
 ggplot(iris, aes(x = Species, y = sepal_petal_width))+
