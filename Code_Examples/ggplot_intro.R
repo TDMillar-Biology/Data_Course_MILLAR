@@ -90,7 +90,7 @@ p3 <- ggplot(midwest, aes(x=area, y=poptotal)) +
 p3
 
 # Don't like those colors?
-p3 + scale_color_brewer(palette = "Set1")
+p3 + scale_color_brewer(palette = "YlorRd")
 
 # Want more color choices? You can check them out in the RColorBrewer package, or even make your own
 library(RColorBrewer)
@@ -98,6 +98,11 @@ brewer.pal.info
 
 # Make your own and take a peek at it:
 library(colorblindr)
+
+remotes::install_github("wilkelab/cowplot")
+install.packages("colorspace", repos = "http://R-Forge.R-project.org")
+remotes::install_github("clauswilke/colorblindr")
+
 pal = c("#c4a113","#c1593c","#643d91","#820616","#477887","#688e52",
         "#12aa91","#705f36","#8997b2","#753c2b","#3c3e44","#b3bf2d",
         "#82b2a4","#894e7d","#a17fc1","#262a8e","#abb5b5","#000000")
@@ -141,8 +146,19 @@ p5
 
 p5 + geom_boxplot()
 p5 + geom_violin()
+p5 + geom_density()
 p5 + geom_bar(stat="identity") # something wrong with this picture!
+p5 = geom_col(stat=)
+ggplot(midwest,aes(x=percollege,fill=state)) + geom_density(alpha=0.5)
 
+
+df <- data(mtcars)
+str(mtcars)
+
+names(mtcars)
+
+ggplot(mtcars, aes(x= hp, y = mpg)) + geom_point( aes(col = as.factor(cyl))) +geom_smooth(method = "lm") + labs(title = "Fuel Efficiency as a Function of Engine Power", x= "Engine Power (HP)", y = "Fuel Efficiency (MPG)", color = "Number of Cylinders")
+ggsave("./filename.png")
 
 # Geoms for looking at a single variable's distribution:
 library(carData)
