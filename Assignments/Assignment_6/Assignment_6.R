@@ -1,6 +1,8 @@
 ## Trevor D. Millar Assignment 6
- 
-data(mtcars)#1. Loads mtcars
+## Assingment 6
+
+#1. Loads mtcars
+data(mtcars)
 
 #2. Subsets mtcars for automotic transmissions
 library(tidyverse) #Tidyverse has filter function
@@ -44,25 +46,29 @@ write.csv(mtcars_sub_displ200,"mtcars_max200_displ.csv")
 Maxhp_mtcars <- max(mtcars$hp)
 maxhp_htcars_sub_automatic <- max(mtcars_sub_automatic$hp)
 maxhp_htcars_sub_displ200 <- max(mtcars_sub_displ200$hp)
-write.t
+
 #11. 
-write.table(c(Maxhp_mtcars, maxhp_htcars_sub_automatic, maxhp_htcars_sub_displ200),"hp_maximums.txt")
-
+write.table(c(Maxhp_mtcars, maxhp_htcars_sub_automatic, maxhp_htcars_sub_displ200),"hp_maximums.txt", row.names = c("Max HP in mtcars", "Max HP with automatic transmission", "Max HP with displacement <= 200"))
 #12. Combines the 3 plots into one image
-
-p1<- ggplot(mtcars, aes(x = wt, y = mpg))+
-  geom_point()+
-  geom_smooth(method = lm)+
+p1 <- ggplot(mtcars, aes(x = wt, y = mpg, color = cyl))+
+  geom_point(aes(color=as.factor(cyl)))+
+  geom_smooth(method = lm,aes(color=as.factor(cyl)))+
   labs(title = "Effect of Weight on Gas Mileage", subtitle = "of cars in mtcars", x = "Weight (lb/1000)", y = "Gas Mileage (MPG)")+
   theme_minimal()
-p2 <-ggplot(mtcars, aes(x ))
+
+p2 <-ggplot(mtcars, aes(x = cyl, y = mpg))+
+  geom_violin(aes(color=as.factor(cyl), fill=as.factor(cyl))) +
+  labs(title = "Gas mileage vs. Number of cylinders", subtitle = "of cars in mtcars", legend= "Number of Cylinders", x= "Cylinders", y = "Gas Mileage (MPG)")
 
 p3 <- ggplot(mtcars, aes(x = hp, y = mpg))+
-  geom_point()+
-  geom_smooth(method = lm)+
+  geom_point(aes(color=as.factor(cyl)))+
+  geom_smooth(method = lm, aes(color=as.factor(cyl)))+
   labs(title = "Effect of Horsepower on Gas Mileage", subtitle = "of cars in mtcars", x = "HP", y = "Gas Mileage(MPG)") +
   theme_minimal()
   
-
-p1 + p3
 library(patchwork)
+
+png("combined_mtcars_plot.png")
+(p1 + p3) / p2
+dev.off()
+#13 to save to combined_mtcars_plot.png above
