@@ -1,0 +1,8 @@
+Trevor D. Millar
+Assignment 7
+Oct. 11, 2020
+
+1. The LDS group is most strongly correlated with the proportion of non-religious people
+2. Negative
+3. Counties with more non-religous people have less LDS people
+4. add this to the end of the code (and put a plus at the end of the facet wrap line): coord_cartesian(xlim=c(0,1), ylim=c(0,1))
