@@ -35,45 +35,45 @@ utah$Pop.Group = groups$cluster # assigns a new variable to utah giving group fo
 
 
 # subset to each group and find summary stats on Religiosity for each
-group1 = mean(utah[utah$Pop.Group == 1,]$Religious)
-group2 = mean(utah[utah$Pop.Group == 2,]$Religious)
-group3 = mean(utah[utah$Pop.Group == 3,]$Religious)
-group4 = mean(utah[utah$Pop.Group == 4,]$Religious)
-group5 = mean(utah[utah$Pop.Group == 5,]$Religious)
-group6 = mean(utah[utah$Pop.Group == 6,]$Religious)
+#group1 = mean(utah[utah$Pop.Group == 1,]$Religious)
+#group2 = mean(utah[utah$Pop.Group == 2,]$Religious)
+#group3 = mean(utah[utah$Pop.Group == 3,]$Religious)
+#group4 = mean(utah[utah$Pop.Group == 4,]$Religious)
+#group5 = mean(utah[utah$Pop.Group == 5,]$Religious)
+#group6 = mean(utah[utah$Pop.Group == 6,]$Religious)
 
 Grouped_religious = utah %>% group_by(Pop.Group) %>% summarize(Mean.Religiosity = mean(Religious, na.rm = TRUE))
 
 
 # same, but mean population
-group1.pop = mean(utah[utah$Pop.Group == 1,]$Pop_2010)
-group2.pop = mean(utah[utah$Pop.Group == 2,]$Pop_2010)
-group3.pop = mean(utah[utah$Pop.Group == 3,]$Pop_2010)
-group4.pop = mean(utah[utah$Pop.Group == 4,]$Pop_2010)
-group5.pop = mean(utah[utah$Pop.Group == 5,]$Pop_2010)
-group6.pop = mean(utah[utah$Pop.Group == 6,]$Pop_2010)
+#group1.pop = mean(utah[utah$Pop.Group == 1,]$Pop_2010)
+#group2.pop = mean(utah[utah$Pop.Group == 2,]$Pop_2010)
+#group3.pop = mean(utah[utah$Pop.Group == 3,]$Pop_2010)
+#group4.pop = mean(utah[utah$Pop.Group == 4,]$Pop_2010)
+#group5.pop = mean(utah[utah$Pop.Group == 5,]$Pop_2010)
+#group6.pop = mean(utah[utah$Pop.Group == 6,]$Pop_2010)
 
 Grouped_populations = utah %>% group_by(Pop.Group) %>% summarize(Mean.Pop = mean(Pop_2010, na.rm = TRUE))
 
 
 # make data frame of each group and mean religiosity
-religiosity = data.frame(Pop.Group = c("group1","group2","group3","group4","group5","group6"),
-           Mean.Religiosity = c(group1,group2,group3,group4,group5,group6),
-           Mean.Pop = c(group1.pop,group2.pop,group3.pop,group4.pop,group5.pop,group6.pop))
+#religiosity = data.frame(Pop.Group = c("group1","group2","group3","group4","group5","group6"),
+           #Mean.Religiosity = c(group1,group2,group3,group4,group5,group6),
+           #Mean.Pop = c(group1.pop,group2.pop,group3.pop,group4.pop,group5.pop,group6.pop))
 
 religiosity = right_join(Grouped_religious, Grouped_populations, by="Pop.Group")
 
 religiosity # take quick look at resulting table
 
 # order by decreasing population
-religiosity = religiosity[order(religiosity$Mean.Pop, decreasing = TRUE),]
+#religiosity = religiosity[order(religiosity$Mean.Pop, decreasing = TRUE),]
 religiosity_arranged = religiosity %>% arrange(desc(Mean.Pop))
 
 religiosity_arranged # take quick look at resulting table
 
 
 # plot that table (redo this using ggplot)
-plot(x=religiosity$Mean.Pop,y=religiosity$Mean.Religiosity)
+#plot(x=religiosity$Mean.Pop,y=religiosity$Mean.Religiosity)
 
 p <- ggplot(religiosity_arranged, aes(x = Mean.Pop, y = Mean.Religiosity))+
   geom_point(shape = 1)+
