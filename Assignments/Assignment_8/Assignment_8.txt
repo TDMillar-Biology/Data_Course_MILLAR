@@ -1,0 +1,24 @@
+Trevor D. Millar
+Assignment 8
+
+1. 
+According to the summary statistics from mod_full, there are a lot of insignificant variables. One of which is nitrogen availability with a p value of 0.30862. 
+This could be due to the limitations of the model, and perhaps another model could be written to better show how nitrogren has an effect on growth rate. (After-all, 
+Nitrogen does show a non-linear response over all). 
+
+The following are just three more examples of insignificant interactions according to my model:
+Nitrogen:Temperature (the interaction of Nitrogen and temp)                                          
+HumidityLow:Temperature (having low humidity and its interaction with temp) and                                 
+SpeciesP.ostreotus:Light:Nitrogen (being species P.ostreotus and its interaction with light and nitrogen)
+                          
+2.
+Growth rate as a function of available nitrogen is a non-linear response. 
+http://www.sthda.com/english/articles/40-regression-analysis/162-nonlinear-regression-essentials-in-r-polynomial-and-spline-regression-models/
+
+3. 
+df <- read.csv("../../Data/non_linear_relationship.csv")
+model <- lm(response ~ poly(predictor), data = df)
+summary(model)
+ggplot(df, aes(x = predictor, y = response))+
+  geom_point()+
+  stat_smooth(method = lm, formula = y ~ poly(x, 5, raw = TRUE))
