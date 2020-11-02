@@ -70,7 +70,7 @@ mean(mod_step$residuals)
 ```
 
 
-It looks like our optimized model is much more accurate than our model using GRE alone (based on mean square residual values alone). Let's further explore why our optimized model is better by adding some predictions to our model as to the likelihood any one student will be admitted to grad school according to his or her GRE score alone.  We will looks at some graphs of our GRE only model then we will look at the more comprehensive model. 
+It looks like our optimized model is much more accurate than our model using GRE alone (based on mean square residual values alone). Let's further explore why our optimized model is better by adding some predictions to our model as to the likelihood any one student will be admitted to grad school according to his or her GRE score alone.  We will look at some graphs of our GRE only model then we will look at the more comprehensive model. 
 
 ```{r, echo=FALSE}
 df_pred <- add_predictions(df, mod_GRE)
