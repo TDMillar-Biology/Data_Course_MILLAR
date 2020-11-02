@@ -83,7 +83,7 @@ In the graph above, one very apparent issue arises. Because there is only one va
  
 We need a more comprehensive model in order to break this linear cycle. We also learn here that you should not trust mean-squared residual values alone when making models! Even though our model based on GRE score alone was the best of the single variable models, it was still lousy compared to our optimized model!
 
-Lets take a look at the summary of our comprehensive model and see which varibles are significant. An * indicates a statistically significant variable. 
+Lets take a look at the summary of our comprehensive model and see which variables are significant. An * indicates a statistically significant variable. 
 
 
 ```{r, echo=FALSE}
@@ -93,7 +93,7 @@ summary(mod_full_w_interactions)
 
 Our optimized model is using every statistically significant variable and interaction. This model follows the following formula: admit ~ gpa + gre + rank + gpa:gre, where gpa:gre is the interaction of those two variables. Let's make a few graphs of our model. 
 
-##Graphs
+## Graphs
 
 ```{r, echo=FALSE}
 df_pred_full <- add_predictions(df, mod_step)
@@ -116,4 +116,4 @@ As we can see, there seems to be a positive correlation between both GPA and GRE
 In summary, what we can learn from this data set are the following conclusions:
 1. Go to the best undergraduate institution you can. Even if your GPA isn't as good as it would be in other programs, you will still have a better shot at getting to grad school .
 2. Study hard for the GRE. Your GRE school is one of the pillars of your acceptance into graduate school. 
-3. Work hard to get good grades in your undergraduate program, although the reputation of your school and your GRE score may both outway your GPA. 
+3. Work hard to get good grades in your undergraduate program, although the reputation of your school and your GRE score may both out - weigh your GPA. 
