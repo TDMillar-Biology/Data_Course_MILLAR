@@ -1,0 +1,160 @@
+---
+title: "Exam 3"
+author: "Trevor D. Millar"
+date: "11/29/2020"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+To begin, we will load up the libraries that we will use. This includes tidyverse, modelr, and broom. Here we will also load up the data set for the first task and take a quick look at the first few rows to get a feel for the data. 
+```{r, echo = FALSE, warning = FALSE, error=FALSE, message=FALSE}
+# Load up libraries
+library(tidyverse)
+library(modelr)
+library(broom)
+
+# Read in and explore the data set
+df <- read.csv("./FacultySalaries_1995.csv")
+head(df)
+```
+
+## Task 1
+This data set needs a lot of cleaning! Lets start by taking this data set from 'wide' format to 'long' format for the variables we are interested in. Specifically we need to look at a column with, the professional's position (rank) and his or her salary. Because there are three positions listed, we will triple the length of our data frame when we do this pivot.
+
+
+
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+columns_for_pivot <- c("AvgAssistProfSalary","AvgAssocProfSalary","AvgFullProfSalary")
+df_long <- pivot_longer(df, cols = all_of(columns_for_pivot), names_to = "Rank", 
+                        values_to = "Salary", names_prefix = "Avg")
+head(df_long)
+
+```
+
+Our data frame seems a bit cluttered. We don't need to use all of the information in the current analysis we can cut that down to only include the information we are interested in. We will, of course, keep our original data frame just in case we need it in a subsequent analysis. We also need to cut out the tier VIIB from the list, as it is not of interest in the present analysis. Lastly, it looks like we need to remove the suffixes from the x labels in order to cut back on all of the clutter.
+
+
+
+```{r,  warning = FALSE, error=FALSE, message=FALSE}
+df_trimmed <- select(df_long, "UnivName", "State", "Tier", "Rank", "Salary")
+df_trimmed$Rank <- as.factor(df_trimmed$Rank)
+tiers_of_interest = c("I", "IIA", "IIB")
+df_trimmed_selected <- filter(df_trimmed, Tier == "I" | Tier == "IIA" | Tier == "IIB")
+df_trimmed_selected$Rank <- gsub("ProfSalary", "", df_trimmed_selected$Rank)
+
+```
+
+Here's a look at the cleaned up data. What a sight!
+```{r,  warning = FALSE, error=FALSE, message=FALSE}
+head(df_trimmed_selected)
+```
+Lets take a look at our tidy-ed up data using GGplot
+
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+p <- ggplot(df_trimmed_selected, aes(x = Rank, y = Salary, fill = Rank))+
+  geom_boxplot() +
+  theme_minimal() +
+  facet_wrap(~Tier)+
+  theme(axis.text.x = element_text(angle = 60))
+p
+ggsave("MILLAR_Fig_1.jpg", p)
+```
+
+Not too bad! Those results should also have saved in your current working directory as MILLAR_Fig_1.jpg, think of it as a keep-sake. I hope you don't mind. 
+
+## Task 2
+Here we are going to take a look at an analysis of variance or ANOVA table for graphical results. 
+
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+Anova <- aov(Salary ~ State + Tier + Rank, data =  df_trimmed)
+Anova_summary <- summary(Anova)
+Anova_summary
+capture.output(Anova_summary, file = "./Salary_ANOVA_Summary.txt")
+```
+
+These results show that each of the three variables are significant (the difference in their mean values shows statistical significance across the board). This means, if you are considering a career in academia (and are motivated by money), you should try your best to get a job in a tier 1 school, work your way up to being a full time tenured professor, and think twice about what state you want to live in!
+
+
+## Task 3
+Let's start by loading up the data and taking a peek. As usual, this data is probably going to need some tidying up. It's a relatively complex data set, so lets just look at the column labels to save mental space. 
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+df_oils <- read.csv("Juniper_Oils.csv")
+names(df_oils)
+```
+
+As I expected, it looks like the data is in wide format and has a few other miscellaneous issues. Lets get this data into long format before anything else!
+
+Dr. Zahn was kind enough to prepare a list of chemical names for us. In order to stump us though, he changed the format from "." between the parts of the nomenclature into "-" between the parts of the nomenclature. Not to worry Dr. Zahn, we will just change the column names in our data set before we use your list of names as this is a line of code or two vs a lot of manual labor changing those names!
+
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+names(df_oils) <- gsub("\\.", "-",names(df_oils))
+names(df_oils)
+```
+
+It's looking good, but we need to compare this to the list of names Dr. Zahn uploaded. 
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+listed_chemicals <- c("alpha-pinene","para-cymene","alpha-terpineol","cedr-9-ene","alpha-cedrene","beta-cedrene","cis-thujopsene","alpha-himachalene","beta-chamigrene","cuparene","compound 1","alpha-chamigrene","widdrol","cedrol","beta-acorenol","alpha-acorenol","gamma-eudesmol","beta-eudesmol","alpha-eudesmol","cedr-8-en-13-ol","cedr-8-en-15-ol","compound 2","thujopsenal")
+print(listed_chemicals)
+
+```
+
+We are close! I did notice that there is a discrepancy between "Compound 1" and "Compound-1" in the two lists. The same is true for compound 2. Lets fix that in the list of chemicals, because R doesn't like working with spaces in column names. 
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+listed_chemicals <- gsub(" ","-", listed_chemicals)
+print(listed_chemicals)
+```
+
+Alright, we can finally get into pivoting our data-set into long format. We're going to take the liberties of cleaning the dataset further by just removing the variables that aren't going to be used in this analysis. 
+
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+df_oils_trimmed <- select(df_oils, "YearsSinceBurn", all_of(listed_chemicals))
+
+df_oils_trimmed_long <- pivot_longer(df_oils_trimmed, cols = listed_chemicals, names_to = "Compound", values_to = "Concentration")
+
+head(df_oils_trimmed_long)
+```
+
+It looks like our data set is roaring and ready to go!
+
+## Task 4
+Let's make a nice GGplot of our data. We're going to plot the concentration of oils as a function of years since the forest fire that killed the tree. Also, each chemical that was observed in the analysis is going to have its own facet so that we can see individual results. Mind you that the y-axis scales are different for each facet!
+
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+oils_plot <- ggplot(df_oils_trimmed_long, aes(x = YearsSinceBurn, y = Concentration))+
+  facet_wrap(~Compound, scales = "free_y")+
+  theme_minimal()+
+  geom_smooth()
+oils_plot
+ggsave("MILLAR_Fig_2.jpg", oils_plot)
+```
+
+## Task 5
+As beautiful as those grpahs are, we should take a look at any statistical significance in our data, that is, which compounds showed a statistically significant change in concentration in the wood with time after burning. A generalized linear model should do the trick here. After making the model, we are going to make a nice table of the results using the broom:tidy() function. 
+
+As a side note, we are using scipen = 999 in order to see our results in normal (non-scientific) notation. 
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+#Generate prescribed model
+options(scipen = 999)
+mod1 <- glm(data = df_oils_trimmed_long, Concentration ~ YearsSinceBurn + Compound)
+#Make it into a tidy tibble table
+tidytable <- tidy(mod1)
+tidytable
+```
+
+That's a lot of information to look at in my opinion and in all reality the only values we are interested in are those which are statistically significant (p < 0.05). Let's filter for only those results. We also have a formatting issue with the compound names we should fix (did you notice the prefix "Compound" added to each name?)
+```{r, warning = FALSE, error=FALSE, message=FALSE}
+
+#Filter this tidy tibble table for significant p values
+tidytable_filtered <- filter(tidytable, p.value < 0.05)
+
+# Format issue with the names of compounds. Need to remove prefix "compound"
+tidytable_filtered$term <- gsub("Compound","",tidytable_filtered$term)
+tidytable_filtered
+```
+
+That should do it for this last analysis. Ten of the compounds had statistically significant concentrations over time after the fire. 
