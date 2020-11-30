@@ -5,7 +5,6 @@
 
 # Load up libraries
 library(tidyverse)
-library(patchwork)
 library(modelr)
 library(broom)
 
