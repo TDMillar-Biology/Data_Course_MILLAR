@@ -1,0 +1,71 @@
+
+Call:
+vegan::adonis(formula = otu_table(ps_ra) ~ ps_ra@sam_data$Structure *      ps_ra@sam_data$Species * ps_ra@sam_data$Location) 
+
+Permutation: free
+Number of permutations: 999
+
+Terms added sequentially (first to last)
+
+                                                                         Df
+ps_ra@sam_data$Structure                                                  3
+ps_ra@sam_data$Species                                                    1
+ps_ra@sam_data$Location                                                   9
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species                           3
+ps_ra@sam_data$Structure:ps_ra@sam_data$Location                         26
+ps_ra@sam_data$Species:ps_ra@sam_data$Location                            5
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species:ps_ra@sam_data$Location  11
+Residuals                                                               410
+Total                                                                   468
+                                                                        SumsOfSqs
+ps_ra@sam_data$Structure                                                   41.021
+ps_ra@sam_data$Species                                                      3.041
+ps_ra@sam_data$Location                                                    20.267
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species                             7.986
+ps_ra@sam_data$Structure:ps_ra@sam_data$Location                           34.646
+ps_ra@sam_data$Species:ps_ra@sam_data$Location                              4.443
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species:ps_ra@sam_data$Location     7.013
+Residuals                                                                  89.691
+Total                                                                     208.108
+                                                                        MeanSqs
+ps_ra@sam_data$Structure                                                13.6736
+ps_ra@sam_data$Species                                                   3.0407
+ps_ra@sam_data$Location                                                  2.2519
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species                          2.6619
+ps_ra@sam_data$Structure:ps_ra@sam_data$Location                         1.3325
+ps_ra@sam_data$Species:ps_ra@sam_data$Location                           0.8886
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species:ps_ra@sam_data$Location  0.6376
+Residuals                                                                0.2188
+Total                                                                          
+                                                                        F.Model
+ps_ra@sam_data$Structure                                                 62.505
+ps_ra@sam_data$Species                                                   13.900
+ps_ra@sam_data$Location                                                  10.294
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species                          12.168
+ps_ra@sam_data$Structure:ps_ra@sam_data$Location                          6.091
+ps_ra@sam_data$Species:ps_ra@sam_data$Location                            4.062
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species:ps_ra@sam_data$Location   2.914
+Residuals                                                                      
+Total                                                                          
+                                                                             R2
+ps_ra@sam_data$Structure                                                0.19711
+ps_ra@sam_data$Species                                                  0.01461
+ps_ra@sam_data$Location                                                 0.09739
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species                         0.03837
+ps_ra@sam_data$Structure:ps_ra@sam_data$Location                        0.16648
+ps_ra@sam_data$Species:ps_ra@sam_data$Location                          0.02135
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species:ps_ra@sam_data$Location 0.03370
+Residuals                                                               0.43098
+Total                                                                   1.00000
+                                                                        Pr(>F)    
+ps_ra@sam_data$Structure                                                 0.001 ***
+ps_ra@sam_data$Species                                                   0.001 ***
+ps_ra@sam_data$Location                                                  0.001 ***
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species                          0.001 ***
+ps_ra@sam_data$Structure:ps_ra@sam_data$Location                         0.001 ***
+ps_ra@sam_data$Species:ps_ra@sam_data$Location                           0.001 ***
+ps_ra@sam_data$Structure:ps_ra@sam_data$Species:ps_ra@sam_data$Location  0.001 ***
+Residuals                                                                         
+Total                                                                             
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
